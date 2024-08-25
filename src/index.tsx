@@ -1,10 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./Store/store";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import DashBoard from "./pages/DashBoard";
+import CreateForm from "./pages/CreateForm";
+
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <DashBoard />,
+      index: true,
+    },
+    {
+      path: "/createForm",
+      element: <CreateForm />,
+    },
+  ],
+  { basename: "/" }
+);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -12,7 +29,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <RouterProvider router={router} />
     </React.StrictMode>
   </Provider>
 );

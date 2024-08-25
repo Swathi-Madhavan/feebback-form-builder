@@ -4,6 +4,8 @@ import StyledCard from "../StylesComponents/CardStyle";
 import FormIcon from "../assets/icons/FormIcon";
 import RowSpaceBetween from "../StylesComponents/RowSpaceBetween";
 import CutsomTypography from "../StylesComponents/CutsomTypography";
+import BlueButton from "../StylesComponents/BlueButton";
+import GreenButton from "../StylesComponents/GreenButton";
 
 export default function CardView() {
   return (
@@ -201,50 +203,8 @@ export default function CardView() {
               gap: "8px",
             }}
           >
-            <Button
-              sx={{
-                padding: "8px 22px",
-                borderRadius: "4px",
-                fontFamily: "Roboto",
-                fontSize: "15px",
-                lineHeight: "1.73",
-                letterSpacing: "0.46px",
-                color: "#FFF",
-                boxShadow:
-                  "0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12)",
-                backgroundColor: "#2e7d32",
-                whiteSpace: "nowrap",
-                textTransform: "uppercase",
-                "&:hover": {
-                  backgroundColor: "#2e7d32",
-                  color: "#FFF",
-                },
-              }}
-            >
-              Edit
-            </Button>
-            <Button
-              sx={{
-                padding: "8px 22px",
-                borderRadius: "4px",
-                fontFamily: "Roboto",
-                fontSize: "15px",
-                lineHeight: "1.73",
-                letterSpacing: "0.46px",
-                color: "#FFF",
-                boxShadow:
-                  "0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12)",
-                backgroundColor: "#2196f3",
-                whiteSpace: "nowrap",
-                textTransform: "uppercase",
-                "&:hover": {
-                  backgroundColor: "#2196f3",
-                  color: "#FFF",
-                },
-              }}
-            >
-              DELETE
-            </Button>
+            <GreenButton>Edit</GreenButton>
+            <BlueButton>DELETE</BlueButton>
           </Stack>
         </Stack>
       </Stack>

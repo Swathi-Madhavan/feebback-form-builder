@@ -4,8 +4,12 @@ import { Box, Stack } from "@mui/material";
 import CustomAppBar from "./components/AppBar/CustomAppBar";
 import NewForm from "./uicomponents/NewForm";
 import CardView from "./uicomponents/CardView";
+import { useLocation } from "react-router-dom";
 
 function App() {
+  const location = useLocation();
+
+  console.log("location", location);
   return (
     <Box
       sx={{
@@ -15,7 +19,7 @@ function App() {
         boxSizing: "content-box",
       }}
     >
-      <CustomAppBar />
+      <CustomAppBar showActionButtons={false} />
       <Stack
         display="flex"
         direction="column"
