@@ -1,41 +1,14 @@
+import React from "react";
 import { Button, Stack, TextField, Typography } from "@mui/material";
-import React, { useCallback, useState } from "react";
 import PlusIcon from "../assets/icons/PlusIcon";
 import StyledCard from "../StylesComponents/CardStyle";
 import CustomModal from "../components/AppBar/CustomModal";
 import CutsomTypography from "../StylesComponents/CutsomTypography";
-import { useAppDispatch } from "../Store/store";
-import { setActiveFormName } from "../Store/slice/createFormSlice";
-import { useNavigate } from "react-router-dom";
+import useTitleChangeHook from "../hook/useTitleChangeHook";
 
 export default function NewForm() {
-  const [open, setOpen] = useState<boolean>(false);
-
-  const [formName, setFormName] = useState<string>("");
-
-  const dispatch = useAppDispatch();
-
-  const navigate = useNavigate();
-
-  const handleBtnClick = useCallback(
-    (isOpen: boolean = false, isCreate = false) => {
-      setOpen(isOpen);
-
-      if (isCreate) {
-        dispatch(setActiveFormName(formName));
-        setFormName("");
-        navigate("/createForm");
-      }
-    },
-    [dispatch, formName, navigate]
-  );
-
-  const handleValueChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setFormName(event?.target?.value);
-    },
-    []
-  );
+  const { handleBtnClick, handleValueChange, open, formName } =
+    useTitleChangeHook(true);
 
   return (
     <StyledCard

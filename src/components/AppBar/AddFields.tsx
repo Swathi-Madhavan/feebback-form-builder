@@ -3,18 +3,16 @@ import { Box } from "@mui/material";
 import ColStart from "../../StylesComponents/ColStart";
 import FieldCard from "../../uicomponents/FieldCard";
 import ShowOn from "./ShowOn";
+import { Draggable, Droppable, DroppableProvided } from "react-beautiful-dnd";
 
-const fields = [
-  { id: "textArea", label: "Textarea" },
-  { id: "numericRating", label: "Numeric rating" },
-  { id: "starRating", label: "Star rating" },
-  { id: "smileyRating", label: "Smiley rating" },
-  { id: "singleLineInput", label: "Single line input" },
-  { id: "radioButton", label: "Radio button" },
-  { id: "categories", label: "Categories" },
-];
+interface FormFieldsType {
+  id: string;
+  label: string;
+}
 
-export default function AddFields() {
+export default function AddFields({
+  lists,
+}: Readonly<{ lists: FormFieldsType[] }>) {
   return (
     <Box
       sx={{
@@ -25,7 +23,7 @@ export default function AddFields() {
         backgroundColor: "#fff",
         position: "absolute",
         right: 0,
-        height: "auto",
+        height: "100vh",
         marginTop: "-24px",
       }}
     >
@@ -33,11 +31,45 @@ export default function AddFields() {
         sx={{
           gap: "14px",
           marginTop: "22px",
+          width: "100%",
         }}
       >
-        {fields.map((item) => (
-          <FieldCard key={item?.id} {...item} />
-        ))}
+        <Droppable droppableId="add_fields" type="dropZone">
+          {(provided: DroppableProvided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className={`list ${
+                snapshot.isDraggingOver ? "dragging-over" : ""
+              }`}
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                gap: "14px",
+                cursor: "pointer",
+              }}
+            >
+              {lists.map((item, index) => (
+                <Draggable key={item.id} draggableId={item.id} index={index}>
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      className={`item ${item.id} ${
+                        snapshot.isDragging ? "dragging" : ""
+                      }`}
+                    >
+                      <FieldCard key={item?.id} {...item} />
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </ColStart>
       <ColStart
         sx={{
