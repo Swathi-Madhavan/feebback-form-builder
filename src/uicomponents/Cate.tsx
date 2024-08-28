@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Button, ButtonGroup, Stack } from "@mui/material";
+import { FormGeneratorProps } from "../pages/type";
 
-export default function Cate() {
+export default function Cate(props: Readonly<FormGeneratorProps>) {
   return (
     <ButtonGroup>
       <Stack
@@ -14,7 +15,7 @@ export default function Cate() {
           gap: "20px",
         }}
       >
-        {["Bug", "Content", "Other"].map((btn) => (
+        {props.state?.categoriesOptions?.map((btn) => (
           <Button
             key={String(btn)}
             sx={{
@@ -33,7 +34,7 @@ export default function Cate() {
               bgcolor: "#ffffff",
             }}
           >
-            {btn}
+            {btn?.label}
           </Button>
         ))}
       </Stack>

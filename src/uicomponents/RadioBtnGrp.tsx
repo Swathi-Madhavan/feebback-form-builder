@@ -4,9 +4,10 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import { FormGeneratorProps } from "../pages/type";
 
-export default function RadioBtnGrp() {
-  const [value, setValue] = React.useState("1");
+export default function RadioBtnGrp(props: Readonly<FormGeneratorProps>) {
+  const [value, setValue] = React.useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
@@ -21,8 +22,14 @@ export default function RadioBtnGrp() {
         value={value}
         onChange={handleChange}
       >
-        <FormControlLabel value="1" control={<Radio />} label="Radio 1" />
-        <FormControlLabel value="2" control={<Radio />} label="Radio 2" />
+        {props.state?.radioGrpOptions?.map((row, index) => (
+          <FormControlLabel
+            key={`index-${index}-${row.value}`}
+            value={row?.value}
+            control={<Radio />}
+            label={row?.label}
+          />
+        ))}
       </RadioGroup>
     </FormControl>
   );

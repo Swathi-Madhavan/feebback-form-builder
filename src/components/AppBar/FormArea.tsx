@@ -3,13 +3,30 @@ import { Box } from "@mui/material";
 import FormTitle from "./FormTitle";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import FormItem from "../../uicomponents/FormItem";
-import { FormFieldsType, FormItemType } from "../../pages/type";
+import { BuilderFormType } from "../../pages/type";
 
 export default function FormArea({
   lists,
-}: Readonly<{ lists: FormFieldsType[] }>) {
-  const onDelete = useCallback((key: FormItemType) => {}, []);
-  const onEdit = useCallback((key: FormItemType) => {}, []);
+  handleDeleteCallBack,
+  handleEditCallBack,
+}: Readonly<{
+  lists: Array<BuilderFormType>;
+  handleDeleteCallBack: (key: string) => void;
+  handleEditCallBack: (key: string) => void;
+}>) {
+  const onDelete = useCallback(
+    (key: string) => {
+      handleDeleteCallBack(key);
+    },
+    [handleDeleteCallBack]
+  );
+
+  const onEdit = useCallback(
+    (key: string) => {
+      handleEditCallBack(key);
+    },
+    [handleEditCallBack]
+  );
 
   return (
     <Box
@@ -42,7 +59,11 @@ export default function FormArea({
             }}
           >
             {lists.map((item, index) => (
-              <Draggable key={item.key} draggableId={item.key} index={index}>
+              <Draggable
+                key={item.uniqueKey}
+                draggableId={item.uniqueKey}
+                index={index}
+              >
                 {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}

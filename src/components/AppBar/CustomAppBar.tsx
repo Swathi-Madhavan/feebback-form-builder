@@ -9,6 +9,11 @@ import BlueButton from "../../StylesComponents/BlueButton";
 import GreenButton from "../../StylesComponents/GreenButton";
 import { Button, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../Store/store";
+import {
+  changeNavBarPublishBtnState,
+  changeNavBarSaveBtnState,
+} from "../../Store/slice/navBarSlice";
 
 interface CustomAppBarProps {
   showActionButtons: boolean;
@@ -19,6 +24,15 @@ function CustomAppBar({ showActionButtons }: Readonly<CustomAppBarProps>) {
   const handleClick = React.useCallback(() => {
     navigate("/");
   }, [navigate]);
+  const dispatch = useAppDispatch();
+
+  const handleSave = () => {
+    dispatch(changeNavBarSaveBtnState(true));
+  };
+
+  const handlePublish = () => {
+    dispatch(changeNavBarPublishBtnState(true));
+  };
 
   return (
     <AppBar
@@ -78,8 +92,8 @@ function CustomAppBar({ showActionButtons }: Readonly<CustomAppBarProps>) {
                 flexDirection="row"
                 sx={{ gap: "33px", marginRight: "14px" }}
               >
-                <BlueButton>Save</BlueButton>
-                <GreenButton>Publish</GreenButton>
+                <BlueButton onClick={handleSave}>Save</BlueButton>
+                <GreenButton onClick={handlePublish}>Publish</GreenButton>
               </Stack>
             )}
           </RowSpaceBetween>

@@ -1,13 +1,47 @@
 import { Button, Stack } from "@mui/material";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import StyledCard from "../StylesComponents/CardStyle";
 import FormIcon from "../assets/icons/FormIcon";
 import RowSpaceBetween from "../StylesComponents/RowSpaceBetween";
 import CutsomTypography from "../StylesComponents/CutsomTypography";
 import BlueButton from "../StylesComponents/BlueButton";
 import GreenButton from "../StylesComponents/GreenButton";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../Store/store";
+import { DynamicFormStruct } from "../pages/type";
+import { setListOfAvailableForms } from "../Store/slice/listofForms";
+import CustomModal from "../components/AppBar/CustomModal";
 
-export default function CardView() {
+export default function CardView(props: Readonly<DynamicFormStruct>) {
+  const { formName, formId } = props;
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const { forms } = useAppSelector((state) => state.listOfForms);
+
+  const handleHandleEdit = useCallback(() => {
+    navigate("/createForm", { state: props });
+  }, [navigate, props]);
+
+  const handleHandleDelete = useCallback(
+    (yes: boolean = false) => {
+      if (yes) {
+        const prevForms = [...forms];
+        const updatedForms = prevForms?.filter((row) => row.formId !== formId);
+        dispatch(setListOfAvailableForms(updatedForms));
+      }
+
+      setShowDeleteModal(false);
+    },
+    [dispatch, formId, forms]
+  );
+
+  const handleDeleteCallBack = useCallback(() => {
+    setShowDeleteModal(true);
+  }, []);
+
   return (
     <StyledCard
       justifyContent="center"
@@ -72,7 +106,7 @@ export default function CardView() {
                 textAlign: "left",
               }}
             >
-              Delivery
+              {formName}
             </CutsomTypography>
           </RowSpaceBetween>
           <RowSpaceBetween sx={{ width: "100%" }}>
@@ -203,11 +237,71 @@ export default function CardView() {
               gap: "8px",
             }}
           >
-            <GreenButton>Edit</GreenButton>
-            <BlueButton>DELETE</BlueButton>
+            <GreenButton onClick={handleHandleEdit}>Edit</GreenButton>
+            <BlueButton onClick={handleDeleteCallBack}>DELETE</BlueButton>
           </Stack>
         </Stack>
       </Stack>
+      <CustomModal
+        open={showDeleteModal}
+        handleCloseCallBack={handleHandleDelete}
+      >
+        <CutsomTypography
+          sx={{
+            fontSize: "20px",
+            fontweight: "500",
+            lineHeight: "1.6",
+            letterSpacing: "0.15px",
+            color: "#000000de",
+            width: "100%",
+          }}
+        >
+          Do you want to delete form {formName}?
+        </CutsomTypography>
+
+        <Stack
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            gap: "8px",
+          }}
+        >
+          <Button
+            sx={{
+              fontFamily: "Roboto",
+              fontSize: "14px",
+              fontweight: "500",
+              lineHeight: "1.7",
+              letterSpacing: "0.4px",
+              color: "#189657 !important",
+              padding: "6px 8px",
+              borderRadius: "4px",
+              backgroundColor: "#fff !important",
+            }}
+            onClick={() => handleHandleDelete(true)}
+          >
+            Delete
+          </Button>
+          <Button
+            sx={{
+              fontFamily: "Roboto",
+              fontSize: "14px",
+              fontweight: "500",
+              lineHeight: "1.7",
+              letterSpacing: "0.4px",
+              color: "#19191957 !important",
+              padding: "6px 8px",
+              borderRadius: "4px",
+              backgroundColor: "#fff !important",
+            }}
+            onClick={() => handleHandleDelete(false)}
+          >
+            Cancel
+          </Button>
+        </Stack>
+      </CustomModal>
     </StyledCard>
   );
 }

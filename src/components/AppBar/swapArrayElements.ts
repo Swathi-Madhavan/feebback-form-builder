@@ -1,12 +1,12 @@
 import { cloneDeep } from "lodash";
-import { FormFieldsType } from "../../pages/type";
+import { BuilderFormType } from "../../pages/type";
 
 export default function swapArrayElements(
-  data: Array<FormFieldsType>,
+  data: Array<BuilderFormType>,
   index1: number,
   index2: number
 ) {
-  const arr: Array<FormFieldsType> = cloneDeep(data);
+  const arr: Array<BuilderFormType> = cloneDeep(data);
   if (
     index1 < 0 ||
     index1 >= arr.length ||

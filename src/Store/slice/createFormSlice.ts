@@ -1,8 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CreateFormSliceType } from "../../model";
+import { uniqueId } from "lodash";
 
 const initialState: CreateFormSliceType = {
   formName: "",
+  formId: "",
 };
 
 const createFormSlice = createSlice({
@@ -11,6 +13,7 @@ const createFormSlice = createSlice({
   reducers: {
     setActiveFormName: (state, action: PayloadAction<string>) => {
       state.formName = action.payload;
+      state.formId = uniqueId();
     },
   },
 });

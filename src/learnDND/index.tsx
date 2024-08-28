@@ -26,7 +26,6 @@ const DNDTEST = () => {
     const end = starter.columns[destination.droppableId];
 
     if (type === "column") {
-      console.log(destination, source, draggableId);
       const newOrder = [...starter.columnOrder];
       newOrder.splice(source.index, 1);
       newOrder.splice(destination.index, 0, draggableId);
@@ -80,9 +79,6 @@ const DNDTEST = () => {
         [end.id]: endTaskColumn,
       },
     });
-    console.log("new starter", starter);
-
-    console.log(destination, source, draggableId);
   };
 
   return (

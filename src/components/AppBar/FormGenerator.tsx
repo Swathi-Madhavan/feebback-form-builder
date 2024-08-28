@@ -1,6 +1,6 @@
 import React from "react";
 import Textarea from "../../StylesComponents/Textarea";
-import { FormItemType } from "../../pages/type";
+import { FormGeneratorProps } from "../../pages/type";
 import Numberrating from "../../uicomponents/Numberrating";
 import Cate from "../../uicomponents/Cate";
 import SingleInput from "../../uicomponents/SingleInput";
@@ -8,12 +8,9 @@ import RadioBtnGrp from "../../uicomponents/RadioBtnGrp";
 import CustomRating from "../../uicomponents/Rating";
 import SmileyRating from "../../StylesComponents/SmileyRating";
 
-interface FormGeneratorProps {
-  key: string;
-  id: FormItemType;
-}
+export default function FormGenerator(props: Readonly<FormGeneratorProps>) {
+  const { id } = props;
 
-export default function FormGenerator({ id }: Readonly<FormGeneratorProps>) {
   if (id === "textArea") {
     return (
       <Textarea
@@ -29,7 +26,7 @@ export default function FormGenerator({ id }: Readonly<FormGeneratorProps>) {
   }
 
   if (id === "categories") {
-    return <Cate />;
+    return <Cate {...props}/>;
   }
 
   if (id === "singleLineInput") {
@@ -37,7 +34,7 @@ export default function FormGenerator({ id }: Readonly<FormGeneratorProps>) {
   }
 
   if (id === "radioButton") {
-    return <RadioBtnGrp />;
+    return <RadioBtnGrp {...props}/>;
   }
 
   if (id === "starRating") {

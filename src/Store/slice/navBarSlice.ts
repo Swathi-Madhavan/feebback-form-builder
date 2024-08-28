@@ -2,20 +2,25 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { NavBarSliceType } from "../../model";
 
 const initialState: NavBarSliceType = {
-  showButton: false,
+  saveFormData: false,
+  publishFormData: false,
 };
 
 const navBarSlice = createSlice({
   name: "assignedToMe",
   initialState,
   reducers: {
-    changeNavBarState: (state, action: PayloadAction<NavBarSliceType>) => {
-      state.showButton = action.payload.showButton;
+    changeNavBarSaveBtnState: (state, action: PayloadAction<boolean>) => {
+      state.saveFormData = action.payload;
+    },
+    changeNavBarPublishBtnState: (state, action: PayloadAction<boolean>) => {
+      state.publishFormData = action.payload;
     },
   },
 });
 
-export const { changeNavBarState } = navBarSlice.actions;
+export const { changeNavBarSaveBtnState, changeNavBarPublishBtnState } =
+  navBarSlice.actions;
 
 const navBarSliceReducer = navBarSlice.reducer;
 export default navBarSliceReducer;

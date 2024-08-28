@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import navBarSliceReducer from "./slice/navBarSlice";
 import createFormSliceReducer from "./slice/createFormSlice";
+import listOfFormSliceReducer from "./slice/listofForms";
 
 const store = configureStore({
   reducer: {
     navBar: navBarSliceReducer,
     form: createFormSliceReducer,
+    listOfForms: listOfFormSliceReducer,
   },
 });
 

@@ -1,29 +1,23 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import React from "react";
-import { FormFieldsType, FormItemType } from "../pages/type";
-import formTitleMapper from "./formTitleMapper";
+import { BuilderFormType } from "../pages/type";
 import PenEditIcon from "../assets/icons/PenEditIcon";
 import DeleteGrayIcon from "../assets/icons/DeleteGrayIcon";
 import FormGenerator from "../components/AppBar/FormGenerator";
 
-interface FormItemProps extends FormFieldsType {
-  onEdit: (ikey: FormItemType) => void;
-  onDelete: (ikey: FormItemType) => void;
+interface FormItemProps extends BuilderFormType {
+  onEdit: (ikey: string) => void;
+  onDelete: (ikey: string) => void;
 }
 
-export default function FormItem({
-  id,
-  key,
-  label,
-  onDelete,
-  onEdit,
-}: Readonly<FormItemProps>) {
+export default function FormItem(props: Readonly<FormItemProps>) {
+  const { uniqueKey, onDelete, onEdit, state } = props;
   return (
     <Box
       sx={{
         boxSizing: "border-box",
         width: "100%",
-        height: "189px",
+        minHeight: "189px",
         padding: "9px",
         boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.25)",
         bgcolor: "#ffffff",
@@ -44,9 +38,9 @@ export default function FormItem({
           color: "#232323",
         }}
       >
-        {formTitleMapper(id)}
+        {state.label}
       </Typography>
-      <FormGenerator key={key} id={id} />
+      <FormGenerator {...props} />
       <Stack
         display="flex"
         flexDirection="row"
@@ -62,6 +56,7 @@ export default function FormItem({
               fontSize: "24px",
             },
           }}
+          onClick={() => onEdit(uniqueKey)}
         >
           <PenEditIcon />
         </Button>
@@ -71,6 +66,7 @@ export default function FormItem({
               fontSize: "24px",
             },
           }}
+          onClick={() => onDelete(uniqueKey)}
         >
           <DeleteGrayIcon />
         </Button>
